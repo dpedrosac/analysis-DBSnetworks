@@ -18,7 +18,6 @@ if nargin == 0
     else
         error('ROOTDIR unknown, please define directory to work at')
     end
-    
 end
 
 debug = 0;
