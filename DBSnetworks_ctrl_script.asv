@@ -12,8 +12,8 @@ if nargin == 0
     return
 elseif nargin == 1 % this means that only the steps are provided
     answer = questdlg('Assuming all subj. available should be analysed ?', ...
-        'Selection subjects', 'Yes','No','Yes');
-    if strcmp(answer, 'Yes')
+	'Selection subjects', 'Yes','No','Yes');
+    if strcmp(answer, 'Yes')    
         dattable = read_metadata;
         subj = dattable.pseudonym;
     else
@@ -29,7 +29,7 @@ end
 adap = get_adaptation(varargin{1});
 if isempty(adap)
     warndlg('No adaptation was selected. Please check for errors','Warning');
-    return
+    return    
 end
 
 %% Start with the distinct steps in order to process data
@@ -47,11 +47,10 @@ end
 end
 
 function adap = get_adaptation(selected_cells)
-% This function returns the adaptations that should be analysed
-
-available_adaps = {   'read_data_brainvision', ....
-    'extract_hdr_brainvision'   };
-matches=cellfun(@(x) ismember(x, available_adaps), ...
-    selected_cells, 'UniformOutput', 0);
-adap = find(cell2mat(matches));
+    % This function returns the adaptations that are inte
+    available_adaps = {   'read_data_brainvision', ....
+                        'extract_hdr_brainvision'   };
+    matches=cellfun(@(x) ismember(x, available_adaps), ...
+        selected_cells, 'UniformOutput', 0);
+    adap = find(cell2mat(matches));
 end

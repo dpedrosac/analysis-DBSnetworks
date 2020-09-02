@@ -1,0 +1,60 @@
+function selectlistbox
+
+% General settings
+debug   = 0;                                                                  % adds the possibility to debug the code if necessary
+listbox_width  = 250;
+listbox_height  = 400;
+fig = uifigure('Position',[100 250 650 600], ... 
+                'Name', 'Control GUI to select subjects and steps2apply');
+      
+if strcmp(getenv('username'), 'dpedrosa')
+    ROOTDIR = 'D:\DBSnetworks';
+    filename_metadata = fullfile(ROOTDIR, 'metadata_DBSnetworks.xlsx');
+else
+    error('ROOTDIR unknown, please define directory to work at')
+end
+
+if debug == 1
+    detectImportOptions(filename_metadata);
+    keyboard;
+end
+dat = readtable(filename_metadata);
+
+%% create the items'-lists which may be displayed later
+items_steps2apply = {   'read_data_brainvision', ....
+                        'extract_hdr_brainvision'   };
+items_pseudonyms = dat.pseudonym;
+
+% Create list box left (subjects)
+lbox1 = uilistbox(fig,...
+    'Position',[25 120 listbox_width listbox_height],...
+    'MultiSelect', 'on', ...
+    'Items',items_pseudonyms,...
+    'ValueChangedFcn', @updateEditField);
+
+% Create list box right (steps2apply)
+lbox2 = uilistbox(fig,...
+    'Position',[listbox_width+50 120 listbox_width listbox_height],...
+    'MultiSelect', 'on', ...
+    'Items',items_steps2apply,...
+    'ValueChangedFcn', @updateEditField);
+
+% Create a push button
+btn = uibutton(fig, 'Push',...
+               'Position',[450, 90, 100, 22],...
+               'ButtonPushedFcn', @(btn,event) startAnalysis(btn, ...
+               lbox1, lbox2));
+
+%% Callback section
+% ValueChangedFcn callback
+    function updateEditField(src,event)
+        txt.Value = src.Value;
+    end
+    
+    function startAnalysis(btn, lbox1, lbox2)
+        disp('Button pressed!')
+        disp(lbox1.Value)
+        disp(lbox2.Value)
+    end
+
+end
