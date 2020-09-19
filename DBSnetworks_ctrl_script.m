@@ -33,7 +33,7 @@ if isempty(adap)
 end
 
 %% Start with the distinct steps in order to process data
-for adap = 1:1 % TODO: helper function is needed which selects the adap numbers according to the cells provided
+for adap = adap % TODO: helper function is needed which selects the adap numbers according to the cells provided
     switch adap
         case (1)
             read_data_brainvision(wdir, subj)
