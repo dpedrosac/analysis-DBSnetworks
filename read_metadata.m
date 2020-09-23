@@ -14,20 +14,22 @@ function dat = read_metadata(varargin)
 if nargin == 0
     varargin{2} = 0;
     if strcmp(getenv('username'), 'dpedrosa')
-        ROOTDIR = 'D:\DBSnetworks';
-    elseif strcmp(getenv('username'), 'Alex')% TODO: anpassen
-        ROOTDIR = 'D:\DBSnetworks';
+        datdir = 'D:\skripte\analysis-DBSnetworks\';
+    elseif strcmp(getenv('username'), 'Alexander')% TODO: anpassen
+        datdir = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\analysis-DBSnetworks-master';
     elseif strcmp(getenv('username'), 'Emil')
-        ROOTDIR = 'D:\DBSnetworks';
+        datdir = 'D:\DBSnetworks';
     else
         error('ROOTDIR unknown, please define directory to work at')
     end
 elseif nargin == 1
-    ROOTDIR = varargin{1};
+    datdir = varargin{1};
     varargin{2} = 0;
 end
-filename_metadata = fullfile(ROOTDIR, 'metadata_DBSnetworks.xlsx');
 
+filename_metadata = fullfile(datdir, 'metadata_DBSnetworks.xlsx');
+    
+    
 if varargin{2} == 1
     detectImportOptions(filename_metadata);
     keyboard;

@@ -11,6 +11,8 @@ function select_files2analyse
 %   This routine is provided as is without any express or implied
 %   warranties whatsoever.
 
+[~, ROOTDIR] = DBSnetworks_defaults;
+
 %% General settings
 debug           = 0;                                                        % adds the possibility to debug the code if necessary
 listbox_width   = 250;
@@ -18,7 +20,7 @@ listbox_height  = 400;
 fig             = uifigure('Position',[100 250 650 600], ... 
                 'Name', 'Control GUI to select subjects and steps2apply');
       
-dat = read_metadata;
+dat = read_metadata(fullfile(ROOTDIR, 'data'));
 
 %% create the items'-lists which may be displayed later
 items_steps2apply = {   'read_data_brainvision', ....
