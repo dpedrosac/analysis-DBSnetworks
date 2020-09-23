@@ -1,10 +1,12 @@
-function wdir = DBSnetworks_defaults
+function [wdir, ROOTDIR] = DBSnetworks_defaults(opt)
 
 %   This is a set of default settings intended to facilitate the scripts
 %   applied in this project
 
-%   Copyright (C) Juli 2020
-%   D. Pedrosa, Emil Pruchnewski, Alexander Sperlich, Josefine Walthaler 
+%   ## Version 1.2
+
+%   Copyright (C) Juli 2020, modified September 2020
+%   D. Pedrosa, Emil Pruchnewski, Alexander Sperlich, Josefine Walthaler
 %   University Hospital of Gießen and Marburg
 %
 %   This software may be used, copied, or redistributed as long as it is
@@ -12,27 +14,34 @@ function wdir = DBSnetworks_defaults
 %   This routine is provided as is without any express or implied
 %   warranties whatsoever.
 
-restoredefaultpath
-close all; clear; clc;
+if nargin == 0
+    opt = 0;
+end
+
+if opt == 0
+    restoredefaultpath
+    close all; clear; clc;
+end
 
 if isunix
     wdir = '/media/storage/test_DBSnetworks';                               % defines the working directory
-    addpath(genpath('/media/storage/skripte/DBSnetworks/'));                % adds the folder with all scripts to the wdir
+    ROOTDIR = '/media/storage/skripte/DBSnetworks/';                        % adds the folder with all scripts to the wdir
     addpath('/media/storage/skripte/fieldtrip/'); ft_defaults               % set fieldtrip defaults
 elseif ispc
     if strcmp(getenv('username'), 'dpedrosa')
-        wdir = 'F:\EEG_DBSnetworks\';
-        addpath('d:\skripte\analysis-DBSnetworks\');
-        addpath('d:\skripte\fieldtrip'); ft_defaults;        
-    elseif strcmp(getenv('username'), 'Alex') % TODO: getenv('username')
-        wdir = 'd:\test_DBSnetworks';
-        addpath('d:\skripte\analysis-DBSnetworks\');
-        addpath('d:\skripte\fieldtrip'); ft_defaults;        
+        wdir = 'C:\Users\dpedrosa\Downloads'; %'F:\EEG_DBSnetworks\';
+        ROOTDIR = 'D:\skripte\analysis-DBSnetworks\';
+        addpath('d:\skripte\fieldtrip'); ft_defaults;
+    elseif strcmp(getenv('username'), 'Alexander')
+        wdir = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\EEG_DBSnetworks';
+        ROOTDIR = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\analysis-DBSnetworks-master';
+        addpath('C:\Users\User\Documents\Fieldtrip\fieldtrip-20200919'); ft_defaults;
     elseif strcmp(getenv('username'), 'Emil')
         wdir = 'd:\test_DBSnetworks';
-        addpath('d:\skripte\analysis-DBSnetworks\');
-        addpath('d:\skripte\fieldtrip'); ft_defaults;                
+        ROOTDIR = [];
+        addpath('d:\skripte\fieldtrip'); ft_defaults;
     else
         warning("Please specific folders to 'DBSnetworks_default.m' fitting to your settings")
     end
+    addpath(genpath(ROOTDIR));
 end
