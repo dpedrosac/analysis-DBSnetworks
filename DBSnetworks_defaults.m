@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 function [wdir, ROOTDIR] = DBSnetworks_defaults(opt)
-=======
-function [wdir, ROOTDIR] = DBSnetworks_defaults
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 
 %   This is a set of default settings intended to facilitate the scripts
 %   applied in this project
 
-<<<<<<< HEAD
 %   ## Version 1.2
-=======
-%   ## Version 1.1
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 
 %   Copyright (C) Juli 2020, modified September 2020
 %   D. Pedrosa, Emil Pruchnewski, Alexander Sperlich, Josefine Walthaler
@@ -37,14 +29,7 @@ if isunix
     addpath('/media/storage/skripte/fieldtrip/'); ft_defaults               % set fieldtrip defaults
 elseif ispc
     if strcmp(getenv('username'), 'dpedrosa')
-<<<<<<< HEAD
         wdir = 'C:\Users\dpedrosa\Downloads'; %'F:\EEG_DBSnetworks\';
-=======
-        wdir = 'F:\EEG_DBSnetworks\';
-<<<<<<< HEAD
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
-=======
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
         ROOTDIR = 'D:\skripte\analysis-DBSnetworks\';
         addpath('d:\skripte\fieldtrip'); ft_defaults;
     elseif strcmp(getenv('username'), 'Alexander')
@@ -58,13 +43,5 @@ elseif ispc
     else
         warning("Please specific folders to 'DBSnetworks_default.m' fitting to your settings")
     end
-<<<<<<< HEAD
-<<<<<<< HEAD
     addpath(genpath(ROOTDIR));
-=======
-    addpath(genpath(ROOTDIR))
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
-=======
-    addpath(genpath(ROOTDIR))
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 end
