@@ -109,7 +109,7 @@ for s = 1:numel(subj)
             % Saves data to pre-specified folder
             save(fullfile(outdir, filename_save), 'data_rsp', '-v7.3');  
         else
-            fprintf('subj: %s already read/resampled, next subj... \n', nam);
+            fprintf('subj: %s already processed, continuing... \n', nam);
             continue
         end
     end
