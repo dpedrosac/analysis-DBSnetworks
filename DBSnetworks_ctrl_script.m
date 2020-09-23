@@ -5,7 +5,11 @@ function DBSnetworks_ctrl_script(varargin)
 %   the analysis; Two inputs are possible
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [wdir, ROOTDIR] = DBSnetworks_defaults(0);                                  % with the option, restoredefaultpath; clc; clear all; close all is used
+=======
+[wdir, ROOTDIR] = DBSnetworks_defaults;
+>>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 =======
 [wdir, ROOTDIR] = DBSnetworks_defaults;
 >>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
