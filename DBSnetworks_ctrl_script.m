@@ -4,15 +4,7 @@ function DBSnetworks_ctrl_script(varargin)
 %   for all the different steps in order to get the preprocessing and
 %   the analysis; Two inputs are possible
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 [wdir, ROOTDIR] = DBSnetworks_defaults(0);                                  % with the option, restoredefaultpath; clc; clear all; close all is used
-=======
-[wdir, ROOTDIR] = DBSnetworks_defaults;
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
-=======
-[wdir, ROOTDIR] = DBSnetworks_defaults;
->>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 
 %% General settings
 if nargin == 0
@@ -48,8 +40,7 @@ for adap = adap % TODO: helper function is needed which selects the adap numbers
         case (2)
             extract_hdr_brainvision(wdir, subj)
             
-    end
-    
+    end  
 end
 
 end
