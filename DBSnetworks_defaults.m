@@ -29,7 +29,11 @@ if isunix
     addpath('/media/storage/skripte/fieldtrip/'); ft_defaults               % set fieldtrip defaults
 elseif ispc
     if strcmp(getenv('username'), 'dpedrosa')
+<<<<<<< HEAD
         wdir = 'C:\Users\dpedrosa\Downloads'; %'F:\EEG_DBSnetworks\';
+=======
+        wdir = 'F:\EEG_DBSnetworks\';
+>>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
         ROOTDIR = 'D:\skripte\analysis-DBSnetworks\';
         addpath('d:\skripte\fieldtrip'); ft_defaults;
     elseif strcmp(getenv('username'), 'Alexander')
@@ -43,5 +47,9 @@ elseif ispc
     else
         warning("Please specific folders to 'DBSnetworks_default.m' fitting to your settings")
     end
+<<<<<<< HEAD
     addpath(genpath(ROOTDIR));
+=======
+    addpath(genpath(ROOTDIR))
+>>>>>>> d95015444f8b812f98c85e24ff2d431ba8c0c249
 end
