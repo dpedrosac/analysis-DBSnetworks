@@ -4,7 +4,7 @@ function DBSnetworks_ctrl_script(varargin)
 %   for all the different steps in order to get the preprocessing and
 %   the analysis; Two inputs are possible
 
-wdir = DBSnetworks_defaults;
+[wdir, ROOTDIR] = DBSnetworks_defaults;
 
 %% General settings
 if nargin == 0
@@ -14,7 +14,7 @@ elseif nargin == 1 % this means that only the steps are provided
     answer = questdlg('Assuming all subj. available should be analysed ?', ...
         'Selection subjects', 'Yes','No','Yes');
     if strcmp(answer, 'Yes')
-        dattable = read_metadata;
+        dattable = read_metadata(fullfile(ROOTDIR, 'data'));
         subj = dattable.pseudonym;
     else
         return
