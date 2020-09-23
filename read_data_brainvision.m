@@ -30,7 +30,6 @@ if ~exist(outdir, 'dir'), mkdir(outdir); end                                % cr
 for s = 1:numel(subj)
     fprintf('\n\tprocessing subj: %s', num2str(subj{s}))
     dir_rawdata = fullfile(wdir, 'raw_data', subj{s});                      % folder in which raw data is stored
-    
     [file_prefix, ~] = subjdetails(ROOTDIR, subj{s});
     
     for c = 1:numel(conds)
@@ -108,8 +107,7 @@ for s = 1:numel(subj)
             end
             
             % Saves data to pre-specified folder
-            save(fullfile(outdir, filename_save), 'data_rsp', '-v7.3');
-            
+            save(fullfile(outdir, filename_save), 'data_rsp', '-v7.3');  
         else
             fprintf('subj: %s already read/resampled, next subj... \n', nam);
             continue
