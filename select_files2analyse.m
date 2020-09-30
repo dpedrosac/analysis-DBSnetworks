@@ -14,17 +14,16 @@ function select_files2analyse
 [~, ROOTDIR] = DBSnetworks_defaults;
 
 %% General settings
-debug           = 0;                                                        % adds the possibility to debug the code if necessary
 listbox_width   = 250;
 listbox_height  = 400;
 fig             = uifigure('Position',[100 250 650 600], ... 
                 'Name', 'Control GUI to select subjects and steps2apply');
-      
+debug           = 0;                                                        % adds the possibility to debug the code if necessary      
 dat = read_metadata(fullfile(ROOTDIR, 'data'));
 
 %% create the items'-lists which may be displayed later
 items_steps2apply = {   'read_data_brainvision', ....
-                        'extract_hdr_brainvision'   };
+                        'clean_data'   };
 items_pseudonyms = dat.pseudonym;
 
 % Create list box left (subjects)
@@ -51,7 +50,7 @@ uilabel(fig, ...
 btn = uibutton(fig, 'Push', 'Text', sprintf('Start \nanalysis'),...
                'Position',[450, 60, 100, 42],...
                'ButtonPushedFcn', @(btn,event) startAnalysis(btn, ...
-               lbox1, lbox2));
+               lbox1, lbox2)); %#ok<NASGU>
 
 %% Callback section    
     function startAnalysis(~, lbox1, lbox2)

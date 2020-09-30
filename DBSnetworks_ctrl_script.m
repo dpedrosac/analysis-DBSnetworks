@@ -36,11 +36,11 @@ end
 for adap = adap % TODO: helper function is needed which selects the adap numbers according to the cells provided
     switch adap
         case (1)
-            read_data_brainvision(wdir, subj)
+            read_data_brainvision(wdir, subj, 'DBS')
         case (2)
-            extract_hdr_brainvision(wdir, subj)
+            clean_data(wdir, subj, 'DBS')
             
-    end  
+    end
 end
 
 end
@@ -49,7 +49,7 @@ function adap = get_adaptation(selected_cells)
 % This function returns the adaptations that should be analysed
 
 available_adaps = {   'read_data_brainvision', ....
-    'extract_hdr_brainvision'   };
+    'clean_data'   };
 matches=cellfun(@(x) ismember(x, available_adaps), ...
     selected_cells, 'UniformOutput', 0);
 adap = find(cell2mat(matches));
