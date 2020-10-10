@@ -2,7 +2,7 @@ function ICAremove_blink_artefacts(subj, cond, filename_rsp, filename_noica)
 
 %   This function is intended to remove the blink artefacts via an ICA
 %   approach; The inputs are two filenames (pre and post-processing) the
-%   subject pseudonym and the condition [off, 60, 130, 180] to be processed 
+%   subject pseudonym and the condition [off, 60, 130, 180] to be processed
 
 %   ## Version 1.0
 
@@ -16,27 +16,20 @@ function ICAremove_blink_artefacts(subj, cond, filename_rsp, filename_noica)
 %   warranties whatsoever.
 
 %% General settings
-[wdir, ROOTDIR] = DBSnetworks_defaults; cd(wdir)
-flag_check      = 1;                                                        % defines whether results should be plotted (1) or not (0)
-dattable        = read_metadata(fullfile(ROOTDIR, 'data'));                 % necessary to save changes later
-subj_idx        = find(cell2mat(cellfun(@(x) ismember({x}, subj), ...       % index of the subject in the table
+[wdir, ROOTDIR]     = DBSnetworks_defaults; cd(wdir)
+flag_check          = 1;                                                        % defines whether results should be plotted (1) or not (0)
+all_conds           = {'off', '60', '130', '180'};
+fx_transpose        = @(x) x.';
+[dattable, patdat]  = read_metadata(fullfile(ROOTDIR, 'data'));                 % necessary to save changes later
+subj_idx            = find(cell2mat(cellfun(@(x) ismember({x}, subj), ...       % index of the subject in the table
     dattable.pseudonym, 'UniformOutput', false)), 1);
 
 if isempty(subj_idx)
     warning("No subject with the pseudonym: %s available. Stopping!", subj)
 end
 
-%% Start for existance of files
-if exist(filename_noica, 'file')
-    answer = questdlg(sprintf('Apparently blink artifact interpolation via ICA to was already performed for subj: %s, cond: %s. Do you want to repeat it?', nam, cond), ...
-        'Repeat Artifact detection', 'Yes','No','No');
-    if strcmp(answer, 'No')
-        return
-    end
-end
-
-% Start extracting and resampling data
-fprintf('\n\tremoving blink artefacts for subj:\t{%d} - cond:\t{}', subj, cond)
+%% Start with ICA in order to remove blink artefacts
+fprintf('\n\tremoving blink artefacts for {subj}:\t%s - %s-cond', subj, cond)
 load(filename_rsp);                                             %#ok<LOAD>  % this line loads the resampled data into workspace
 try data_rsp = sorted_data(data_rsp, 1); catch; end             %#ok<NODEF> % in order to make FT recognize 'Iz', it is necessary to rename it; besides, elec labels are sorted alphabetically for consistency
 
@@ -83,7 +76,7 @@ while done == 0
     
     answer = inputdlg(prompt,dlgtitle, dims, definput);
     x = fx_transpose(str2double(split(answer{1}, ';')));% extract the components to remove
-    
+    done = 1;
     if length(x) > 4
         answer = questdlg('>4 components selected. Continue?', ...
             'Warning: Many components to be removed', 'Yes','No','No');
@@ -98,16 +91,22 @@ cfg = [];
 cfg.component   = x;
 data_noica      = ft_rejectcomponent(cfg, data_comp, data_rsp);             % the next line removes the selected components
 
-% Store ICA results in metadata-file
-eval(strcat('dattable.bt_', num2str(cond), '(', num2str(subj_idx)', ')=x'))
-save_metadata(dattable)
+idx = 1;
+if ~isempty(patdat)
+    matches=cellfun(@(x) strcmp(x, subj), {patdat(:).subj}, 'Un', 0);
+    idx = find(cell2mat(matches));
+end
+
+patdat(idx).subj = subj;
+patdat(idx).bt{find(ismember(all_conds, cond))} = x; %#ok<FNDSB>
+save(fullfile(ROOTDIR, 'data', 'preprocess_data.mat'), 'patdat', '-v7.3');
 
 %  Plot differences before ICA removal and after
 if flag_check == 1
     cfg = [];
     cfg.datafile        = data_rsp;                                         % first file to be plotted
     cfg.channel         = 1:42;%'EEG';                                      % channels to plot
-    cfg.ylim            = [1 1].*25;                                        % scale at the y-axis
+    cfg.ylim            = [-1 1].*25;                                        % scale at the y-axis
     cfg.viewmode        = 'vertical';
     cfg.preproc.bpfilter= 'yes';                                            % defines the preprocessing thta happens with the data, that is
     cfg.preproc.bpfreq  = [1 40];                                           % band-pass filtering

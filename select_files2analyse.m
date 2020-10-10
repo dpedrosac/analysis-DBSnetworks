@@ -19,7 +19,7 @@ listbox_height  = 400;
 fig             = uifigure('Position',[100 250 650 600], ... 
                 'Name', 'Control GUI to select subjects and steps2apply');
 debug           = 0;                                                        % adds the possibility to debug the code if necessary      
-dat = read_metadata(fullfile(ROOTDIR, 'data'));
+[dat, ~] = read_metadata(fullfile(ROOTDIR, 'data'));
 
 %% create the items'-lists which may be displayed later
 items_steps2apply = {   'read_data_brainvision', ....

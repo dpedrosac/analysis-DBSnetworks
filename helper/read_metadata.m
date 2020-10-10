@@ -1,4 +1,4 @@
-function dat = read_metadata(varargin)
+function [dattable, patdat] = read_metadata(varargin);
 
 %   Function which reads metadata from xls-file; returns a table
 
@@ -28,11 +28,15 @@ elseif nargin == 1
 end
 
 filename_metadata = fullfile(datdir, 'metadata_DBSnetworks.xlsx');
-    
-    
+try
+    load(fullfile(datdir, "preprocess_data.mat"));
+catch
+    patdat = [];
+end
+
 if varargin{2} == 1
-    detectImportOptions(filename_metadata);
+    opts = detectImportOptions(filename_metadata); %#ok<NASGU>
     keyboard;
 end
 
-dat = readtable(filename_metadata);
+dattable = readtable(filename_metadata);

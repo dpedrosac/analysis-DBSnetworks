@@ -31,7 +31,7 @@ if ~exist(outdir_clean, 'dir'), mkdir(outdir_clean); end                    % cr
 % Start extracting and resampling data
 for s = 1:numel(subj)
     fprintf('\n\tprocessing subj: %s\n', num2str(subj{s}))
-    [file_prefix, ~] = subjdetails(ROOTDIR, subj{s});
+    file_prefix = subjdetails(ROOTDIR, subj{s});
     
     for c = 1:numel(conds)
         fprintf('\t\t ... condition: %s', num2str(upper(conds{c})))
@@ -44,10 +44,10 @@ for s = 1:numel(subj)
             filename_rsp = strcat('datrsp_', file_prefix, '_', ...
                 conds{c}, sprintf('_%s', experiment), '.mat');                  % filename under which data will be saved in the (outdir) directory
             filename_rsp = fullfile(wdir, 'data_rsp', filename_rsp);
-            ICAremove_blink_artefacts(subj, cond, filename_rsp, ...
+            ICAremove_blink_artefacts(subj{s}, conds{c}, filename_rsp, ...
                 filename_noica)
         else
-            fprintf('\n\t removing artefacts with ICA already done!\n');
+            fprintf('\n\t ICA already finished for subj: %s in the %s (Hz) condition!\n', subj{s}, conds{c});
         end
         
         %% Remove channels with artefacts from data after visual inspection

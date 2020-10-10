@@ -30,10 +30,10 @@ end
 
 if backup == 1
     folder_backup = fullfile(ROOTDIR, 'data', 'backup');
-    if ~exist(folder_backup, 'dir'); mkdir(folder_backup); end; 
+    if ~exist(folder_backup, 'dir'); mkdir(folder_backup); end;
     target_file = fullfile(folder_backup, sprintf('%smetadata_DBSnetworks.xlsx', datestr(now,'mm-dd-yyyy_HH-MM-SS')));
     copyfile(filename_metadata, target_file)
 end
 
-   warning('off','MATLAB:xlswrite:AddSheet'); %optional
-   writetable(dattable, filename_metadata, 'Sheet',1);
+warning('off','MATLAB:xlswrite:AddSheet'); %optional
+writetable(dattable, filename_metadata, 'Sheet', 1, 'FileType','text', 'Delimiter', 'tab');

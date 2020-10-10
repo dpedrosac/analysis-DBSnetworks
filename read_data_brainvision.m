@@ -31,7 +31,7 @@ if ~exist(outdir, 'dir'), mkdir(outdir); end                                % cr
 for s = 1:numel(subj)
     fprintf('\n\tprocessing subj: %s\n', num2str(subj{s}))
     dir_rawdata = fullfile(wdir, 'raw_data', subj{s});                      % folder in which raw data is stored
-    [file_prefix, ~] = subjdetails(ROOTDIR, subj{s});
+    file_prefix = subjdetails(ROOTDIR, subj{s});
     
     for c = 1:numel(conds)
         fprintf('\t\t ... condition: %s', num2str(upper(conds{c})))

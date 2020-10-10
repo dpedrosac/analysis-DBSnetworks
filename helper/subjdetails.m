@@ -1,4 +1,4 @@
-function [prefix, bt] = subjdetails(datdir, subj)
+function prefix = subjdetails(datdir, subj)
 
 %   This (helper) function is intended to look extract the information for
 %   the subject being analysed.
@@ -20,5 +20,5 @@ prefix = cell2mat(dattable.pseudonym(idx_subj));
 %if ~(isempty(dattable.prefix(idx_subj)) || isnan(dattable.prefix(idx_subj)))
 %    prefix = cell2mat(dattable.prefix(idx_subj));
 %end
-bt = {dattable.bt_off(idx_subj), dattable.bt_60(idx_subj), ... 
-    dattable.bt_130(idx_subj), dattable.bt_180(idx_subj)};
+%bt = {dattable.bt_off(idx_subj), dattable.bt_60(idx_subj), ... 
+%    dattable.bt_130(idx_subj), dattable.bt_180(idx_subj)};
