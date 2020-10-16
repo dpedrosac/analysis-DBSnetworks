@@ -8,7 +8,7 @@ function DBSnetworks_ctrl_script(varargin)
 
 %% General settings
 if nargin == 0
-    select_files2analyse
+     select_files2analyse
     return
 elseif nargin == 1 % this means that only the steps are provided
     answer = questdlg('Assuming all subj. available should be analysed ?', ...
