@@ -51,8 +51,20 @@ for s = 1:numel(subj)
         end
         
         %% Remove channels with artefacts from data after visual inspection
-        % filename_clean = % removes "bad channels" and performs spline
-        % interpolation
+        filename_clean = fullfile(outdir_clean, ...
+            strcat('data_clean_', file_prefix, '_', conds{c}, ...
+            sprintf('_%s', experiment), '.mat'));                             % removes the artefacts detected in the ICA
+        if ~exist(filename_clean, 'file')
+            filename_noica = strcat('data_noica_', file_prefix, '_', ...
+                conds{c}, sprintf('_%s', experiment), '.mat');                  % filename under which data will be saved in the (outdir) directory
+            filename_noica = fullfile(wdir, 'data_noica', filename_noica);
+            remove_badchannels(subj{s}, conds{c}, filename_noica, ...
+                filename_clean);
+        else
+            fprintf('\n\t interpolation of bad channels already finished for subj: %s in the %s (Hz) condition!\n', subj{s}, conds{c});
+        end
+
+        
         
     end
 end
