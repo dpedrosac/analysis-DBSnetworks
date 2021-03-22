@@ -36,10 +36,10 @@ elseif ispc
         wdir = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\EEG_DBSnetworks';
         ROOTDIR = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\analysis-DBSnetworks-master';
         addpath('C:\Users\User\Documents\Fieldtrip\fieldtrip-20200919'); ft_defaults;
-    elseif strcmp(getenv('username'), 'Emil')
-        wdir = 'd:\test_DBSnetworks';
-        ROOTDIR = [];
-        addpath('d:\skripte\fieldtrip'); ft_defaults;
+    elseif strcmp(getenv('username'), 'charl')
+        wdir = 'C:\Users\charl\Documents\Studium\Doktorarbeit\EEG DBSnetworks';
+        ROOTDIR = ['C:\Users\charl\Documents\Studium\Doktorarbeit\analysis-DBSnetworks-master'];
+        addpath('C:\Users\charl\Documents\Studium\Doktorarbeit\fieldtrip-lite-20201205\fieldtrip-20201205'); ft_defaults;
     else
         warning("Please specific folders to 'DBSnetworks_default.m' fitting to your settings")
     end

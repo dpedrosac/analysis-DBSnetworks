@@ -1,8 +1,10 @@
-function [dattable, patdat] = read_metadata(varargin);
+function [dattable, patdat] = read_metadata(varargin)
 
 %   Function which reads metadata from xls-file; returns a table
 
-%   Copyright (C) September 2020
+%   ## Version 1.1
+
+%   Copyright (C) September 2020, modified October 2020
 %   D. Pedrosa, Emil Pruchnewski, Alexander Sperlich, Josefine Walthaler
 %   University Hospital of Gießen and Marburg
 %

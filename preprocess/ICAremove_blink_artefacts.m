@@ -20,8 +20,9 @@ function ICAremove_blink_artefacts(subj, cond, filename_rsp, filename_noica)
 flag_check          = 1;                                                        % defines whether results should be plotted (1) or not (0)
 all_conds           = {'off', '60', '130', '180'};
 fx_transpose        = @(x) x.';
-[dattable, patdat]  = read_metadata(fullfile(ROOTDIR, 'data'));                 % necessary to save changes later
-subj_idx            = find(cell2mat(cellfun(@(x) ismember({x}, subj), ...       % index of the subject in the table
+[dattable, patdat]  = read_metadata(fullfile(ROOTDIR, 'data'));% necessary to save changes later
+% subj_all            = dattable.pseudonym; %not necessary and redundant, REMOVE!!!  
+subj_idx            = find(cell2mat(cellfun(@(x) ismember({x}, subj), ...   % index of the subject in the table
     dattable.pseudonym, 'UniformOutput', false)), 1);
 
 if isempty(subj_idx)
@@ -29,7 +30,7 @@ if isempty(subj_idx)
 end
 
 %% Start with ICA in order to remove blink artefacts
-fprintf('\n\tremoving blink artefacts for {subj}:\t%s - %s-cond', subj, cond)
+fprintf('\n\t removing blink artefacts for {subj}:\t%s - %s-cond', subj, cond)
 load(filename_rsp);                                             %#ok<LOAD>  % this line loads the resampled data into workspace
 try data_rsp = sorted_data(data_rsp, 1); catch; end             %#ok<NODEF> % in order to make FT recognize 'Iz', it is necessary to rename it; besides, elec labels are sorted alphabetically for consistency
 
@@ -98,7 +99,7 @@ if ~isempty(patdat)
 end
 
 patdat(idx).subj = subj;
-patdat(idx).bt{find(ismember(all_conds, cond))} = x; %#ok<FNDSB>
+patdat(idx).bcomp{find(ismember(all_conds, cond))} = x; %#ok<FNDSB>
 save(fullfile(ROOTDIR, 'data', 'preprocess_data.mat'), 'patdat', '-v7.3');
 
 %  Plot differences before ICA removal and after
