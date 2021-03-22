@@ -4,7 +4,7 @@ function ICAremove_blink_artefacts(subj, cond, filename_rsp, filename_noica)
 %   approach; The inputs are two filenames (pre and post-processing) the
 %   subject pseudonym and the condition [off, 60, 130, 180] to be processed
 
-%   ## Version 1.0
+%   ## Version 1.1
 
 %   Copyright (C) September 2020
 %   D. Pedrosa, Emil Pruchnewski, Alexander Sperlich, Josefine Waldthaler
