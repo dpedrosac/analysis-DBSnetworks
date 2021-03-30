@@ -20,17 +20,23 @@ function remove_badchannels(subj, cond, filename_noica, filename_clean)
 [wdir, ROOTDIR]     = DBSnetworks_defaults; cd(wdir)
 all_conds           = {'off', '60', '130', '180'};
 fx_transpose        = @(x) x.';
-[dattable, ~]  = read_metadata(fullfile(ROOTDIR, 'data'));% necessary to save changes later
+[dattable, patdat]  = read_metadata(fullfile(ROOTDIR, 'data'));% necessary to save changes later
 
 subj_idx            = find(cell2mat(cellfun(@(x) ismember({x}, subj), ...   % index of the subject in the table
     dattable.pseudonym, 'UniformOutput', false)), 1);
+if size(patdat,2) < subj_idx
+    patdat(subj_idx).subj = [];
+else
+    patdat(subj_idx).subj = subj;
+end
 
+cond_idx = find(strcmp(cond, all_conds));
 if isempty(subj_idx)
     warning("No subject with the pseudonym: %s available. Stopping!", subj)
     return
 end
 
-%% Start with  ???
+%% Start with identifying "bad channels" and "bad trials"
 fprintf('\n\t removing "bad channels" for {subj}:\t%s - %s-cond', subj, cond)
 load(filename_noica);                                           %#ok<LOAD>  % this line loads the resampled data into workspace
 try data_noica = sorted_data(data_noica, 1); catch; end         %#ok<NODEF> % in order to make FT recognize 'Iz', it is necessary to rename it; besides, elec labels are sorted alphabetically for consistency
@@ -39,10 +45,12 @@ filename_trialdef   = strcat('trialdef_', subj, '_', cond, '_DBS.mat');
 load(fullfile(wdir, 'data', 'metadata', filename_trialdef));    %#ok<LOAD>  % this line loads the trial definitions so that data may be cut into chunks to be processed
 [bc, bt] = plot_epoched(subj, trialdef, cond, data_noica);
 
-%% TODO:    1) bt and bc MUST be saved to the metadata file, in order to save results for all conditions;
-%           2) there must be a 'flag' indicating that this step is already done        
+patdat(subj_idx).bt{cond_idx}= bt;
+patdat(subj_idx).bc{cond_idx}= bc;
 
-%save(filename_noica, 'data_noica', '-v7.3');                                % save data to (outdir)
+filename_patdat = fullfile(ROOTDIR, 'data', 'preprocess_data.mat');
+backup_preprocessed(filename_patdat, ROOTDIR)                               % backup data so that no information is lost
+save(filename_patdat, 'patdat', '-v7.3');                                   % save data to (outdir)
 end
 
 function [bc, bt] = plot_epoched(subj, trialdef, cond, data_noica)
@@ -97,7 +105,7 @@ cfg.method      = 'summary';
 cfg.metric      = 'zvalue';
 cfg.channel     = 'EEG';
 cfg.keepchannel = 'nan';                                                    % replacing "bad channels" with nan makes it easier to idetify them later
-cfg.keeptrials  = 'nan';                                                    % replacing "bad channels" with nan makes it easier to idetify them later
+cfg.keeptrial   = 'nan';                                                    % replacing "bad channels" with nan makes it easier to idetify them later
 dummy           = ft_rejectvisual(cfg, data_epoched);
 
 % Select bad trials according to 'ft_rejectvisual routine and save them
@@ -110,5 +118,15 @@ bc = {dummy.label{bc_select}}; %#ok<FNDSB>
 prompt  = sprintf('Please take a minute to verify the results;\nbad trials:\t%s,\nbad channels:\t%s', ...
     regexprep(num2str(bt),'\s+',','), strjoin(bc,', '));
 waitfor(warndlg(prompt, 'Warning'));
-keyboard;
+keyboard
+close all
+end
+
+function backup_preprocessed(filename_metadata, ROOTDIR)
+%% Backup for patdat information
+
+folder_backup = fullfile(ROOTDIR, 'data', 'backup');
+if ~exist(folder_backup, 'dir'); mkdir(folder_backup); end
+target_file = fullfile(folder_backup, sprintf('%spreprocess_data.mat', datestr(now,'mm-dd-yyyy_HH-MM-SS')));
+copyfile(filename_metadata, target_file)
 end
