@@ -18,7 +18,7 @@ if nargin == 0
     if strcmp(getenv('username'), 'dpedrosa')
         datdir = 'D:\skripte\analysis-DBSnetworks\';
     elseif strcmp(getenv('username'), 'Alexander')% TODO: anpassen
-        datdir = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\analysis-DBSnetworks-master';
+        datdir = 'F:\Alexander\Doktorarbeit\analysis-DBSnetworks-master\data';
     elseif strcmp(getenv('username'), 'Emil')
         datdir = 'D:\DBSnetworks';
     else
