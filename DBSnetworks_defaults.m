@@ -33,8 +33,8 @@ elseif ispc
         ROOTDIR = 'D:\skripte\analysis-DBSnetworks\';
         addpath('d:\skripte\fieldtrip'); ft_defaults;
     elseif strcmp(getenv('username'), 'Alexander')
-        wdir = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\EEG_DBSnetworks';
-        ROOTDIR = 'C:\Users\User\Documents\Alexander\Uni\Doktorarbeit\analysis-DBSnetworks-master';
+        wdir = 'F:\Alexander\Doktorarbeit\analysis-DBSnetworks-master\data';
+        ROOTDIR = 'F:\Alexander\Doktorarbeit\analysis-DBSnetworks-master';
         addpath('C:\Users\User\Documents\Fieldtrip\fieldtrip-20200919'); ft_defaults;
     elseif strcmp(getenv('username'), 'charl')
         wdir = 'C:\Users\charl\Documents\Studium\Doktorarbeit\EEG DBSnetworks';
