@@ -42,7 +42,7 @@ load(filename_noica);                                           %#ok<LOAD>  % th
 try data_noica = sorted_data(data_noica, 1); catch; end         %#ok<NODEF> % in order to make FT recognize 'Iz', it is necessary to rename it; besides, elec labels are sorted alphabetically for consistency
 
 filename_trialdef   = strcat('trialdef_', subj, '_', cond, '_DBS.mat');
-load(fullfile(wdir,'metadata', filename_trialdef));    %#ok<LOAD>  % this line loads the trial definitions so that data may be cut into chunks to be processed
+load(fullfile(wdir,'metadata_eeg', filename_trialdef));    %#ok<LOAD>  % this line loads the trial definitions so that data may be cut into chunks to be processed
 [bc, bt] = plot_epoched(subj, trialdef, cond, data_noica);
 
 patdat(subj_idx).bt{cond_idx}= bt;
