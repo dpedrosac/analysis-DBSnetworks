@@ -37,7 +37,7 @@ elseif ispc
         ROOTDIR = 'F:\Alexander\Doktorarbeit\analysis-DBSnetworks-master';
         addpath('C:\Users\User\Documents\Fieldtrip\fieldtrip-20200919'); ft_defaults;
     elseif strcmp(getenv('username'), 'charl')
-        wdir = 'C:\Users\charl\Documents\Studium\Doktorarbeit\EEG DBSnetworks';
+        wdir = 'G:\Doktorarbeit\EEG DBSnetworks';
         ROOTDIR = ['C:\Users\charl\Documents\Studium\Doktorarbeit\analysis-DBSnetworks-master'];
         addpath('C:\Users\charl\Documents\Studium\Doktorarbeit\fieldtrip-lite-20201205\fieldtrip-20201205'); ft_defaults;
     else
